@@ -4,44 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/bienListFragment">
 
-        <!-- Liste des biens -->
+        <!-- Fragment Liste des biens -->
         <fragment
             android:id="@+id/bienListFragment"
             android:name="com.example.evalandroidstudio.ui.bienImmo.BienListFragment"
             android:label="Biens"
             tools:layout="@layout/fragment_bien_list">
+
+                <!-- Action vers création d’un bien -->
                 <action
-                    android:id="@+id/action_to_create"
+                    android:id="@+id/action_to_bienCreateFragment"
                     app:destination="@id/bienCreateFragment" />
+
+                <!-- Action vers détail d’un bien -->
                 <action
-                    android:id="@+id/action_to_detail"
+                    android:id="@+id/action_to_bienDetailFragment"
                     app:destination="@id/bienDetailFragment" />
         </fragment>
 
-
-        <!-- Création d’un bien -->
+        <!-- Fragment création d’un bien -->
         <fragment
             android:id="@+id/bienCreateFragment"
             android:name="com.example.evalandroidstudio.ui.bienImmo.BienCreateFragment"
             android:label="Créer Bien"
-            tools:layout="@layout/fragment_bien_create" />
+            tools:layout="@layout/fragment_bien_create"/>
 
-        <!-- Détail d’un bien -->
+        <!-- Fragment détail d’un bien -->
         <fragment
             android:id="@+id/bienDetailFragment"
             android:name="com.example.evalandroidstudio.ui.bienImmo.BienDetailFragment"
             android:label="Détail Bien"
-            tools:layout="@layout/fragment_bien_detail">
-                <!-- Ajouter une pièce -->
-                <action
-                    android:id="@+id/action_detail_to_addPiece"
-                    app:destination="@id/pieceAddFragment" />
-        </fragment>
+            tools:layout="@layout/fragment_bien_detail"/>
 
-        <!-- Ajouter une pièce -->
+        <!-- Fragment ajout d’une pièce (quadrilatère) -->
         <fragment
             android:id="@+id/pieceAddFragment"
-            android:name="com.example.evalandroidstudio.ui.addpiece.PieceAddQuadrilatereFragment"
+            android:name="com.example.evalandroidstudio.ui.bienImmo.PieceAddQuadrilatereFragment"
             android:label="Ajouter Pièce"
-            tools:layout="@layout/fragment_piece_add" />
+            tools:layout="@layout/fragment_piece_add_quadrilatere"/>
 </navigation>

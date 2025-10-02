@@ -1,66 +1,119 @@
 package com.example.evalandroidstudio.ui.bienImmo;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.evalandroidstudio.R;
+import com.example.evalandroidstudio.model.BienImmobilier;
+import com.example.evalandroidstudio.model.Piece;
+import com.example.evalandroidstudio.viewmodel.BienImmoViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BienDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class BienDetailFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private BienImmoViewModel viewModel;
+    private PieceAdapter adapter;
+    private BienImmobilier bien;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public BienDetailFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BienDetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BienDetailFragment newInstance(String param1, String param2) {
-        BienDetailFragment fragment = new BienDetailFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_bien_detail, container, false);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(BienImmoViewModel.class);
+
+        // Récupération du bienId passé dans le bundle
+        String bienId = getArguments() != null ? getArguments().getString("bienId") : null;
+        if (bienId != null) {
+            bien = viewModel.getBienById(bienId);
+        }
+
+        if (bien == null) return;
+
+        // TextView pour afficher info du bien
+        TextView tvDetails = view.findViewById(R.id.tvBienDetails);
+        tvDetails.setText(getBienDescription(bien));
+
+        // RecyclerView pour les pièces
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPieces);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        adapter = new PieceAdapter(new ArrayList<>(bien.getPieces()));
+        recyclerView.setAdapter(adapter);
+
+        // FloatingActionButton pour ajouter une pièce
+        FloatingActionButton fabAddPiece = view.findViewById(R.id.fabAddPiece);
+        fabAddPiece.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("bienId", bien.getId());
+            Navigation.findNavController(view).navigate(R.id.action_to_pieceAddFragment, bundle);
+        });
+    }
+
+    private String getBienDescription(BienImmobilier bien) {
+        return "ID: " + bien.getId() +
+                "\nType: " + bien.getType() +
+                "\nNombre de pièces: " + (bien.getPieces() != null ? bien.getPieces().size() : 0);
+    }
+
+    // Adapter interne pour les pièces
+    private static class PieceAdapter extends RecyclerView.Adapter<PieceViewHolder> {
+        private final ArrayList<Piece> pieces;
+
+        public PieceAdapter(ArrayList<Piece> pieces) {
+            this.pieces = pieces;
+        }
+
+        @NonNull
+        @Override
+        public PieceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(android.R.layout.simple_list_item_1, parent, false);
+            return new PieceViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull PieceViewHolder holder, int position) {
+            Piece piece = pieces.get(position);
+            holder.bind(piece);
+        }
+
+        @Override
+        public int getItemCount() {
+            return pieces.size();
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bien_detail, container, false);
+    private static class PieceViewHolder extends RecyclerView.ViewHolder {
+        public PieceViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        public void bind(Piece piece) {
+            ((TextView) itemView).setText(piece.getTypePiece().getNom() +
+                    " - Surface: " + piece.surface() + " m²");
+        }
     }
 }

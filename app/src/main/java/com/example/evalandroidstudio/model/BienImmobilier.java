@@ -2,6 +2,8 @@ package com.example.evalandroidstudio.model;
 
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -95,5 +97,13 @@ import java.util.UUID;
 
         public String getId() {
             return this.id;
+        }
+
+        public String getType() {
+            return this.type;
+        }
+
+        public Collection<Object> getPieces() {
+            return Collections.singleton(this.pieces);
         }
     }

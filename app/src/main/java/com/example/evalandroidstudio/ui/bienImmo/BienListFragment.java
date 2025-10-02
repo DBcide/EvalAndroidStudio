@@ -27,7 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class BienListFragment extends Fragment {
 
     private BienImmoViewModel viewModel;
-    private RecyclerView recyclerView;
     private BienAdapter adapter;
 
     @Nullable
@@ -43,41 +42,42 @@ public class BienListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // RecyclerView
-        recyclerView = view.findViewById(R.id.recyclerViewBiens);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewBiens);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // Adapter
-        adapter = new BienAdapter(bien -> {
-            // Clic sur un bien → navigation vers le détail
+        // Adapter personnalisé
+        adapter = new BienAdapter(new ArrayList<>(), bien -> {
+            // Clic sur un bien → aller vers le détail
             Bundle bundle = new Bundle();
             bundle.putString("bienId", bien.getId());
-            Navigation.findNavController(view).navigate(R.id.action_to_detail, bundle);
+            Navigation.findNavController(view).navigate(R.id.action_to_bienDetailFragment, bundle);
         });
         recyclerView.setAdapter(adapter);
 
-        // ViewModel via Hilt
+        // ViewModel
         viewModel = new ViewModelProvider(this).get(BienImmoViewModel.class);
 
-        // Observation LiveData pour mettre à jour l’UI
-        viewModel.getBiens().observe(getViewLifecycleOwner(), biens -> {
-            adapter.setBiens(biens);
-        });
+        // Observer LiveData
+        viewModel.getBiens().observe(getViewLifecycleOwner(), biens -> adapter.setBiens(biens));
 
         // FloatingActionButton → création d’un nouveau bien
         FloatingActionButton fab = view.findViewById(R.id.fabAddBien);
-        fab.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.action_to_create));
+        fab.setOnClickListener(v -> Navigation.findNavController(view)
+                .navigate(R.id.action_to_bienCreateFragment));
     }
 
-    // Adapter interne pour le RecyclerView
+    // Adapter interne pour RecyclerView
     private static class BienAdapter extends RecyclerView.Adapter<BienViewHolder> {
-        private List<BienImmobilier> biens = new ArrayList<>();
-        private final OnItemClickListener listener;
 
-        interface OnItemClickListener {
-            void onItemClick(BienImmobilier bien);
+        interface OnClickListener {
+            void onClick(BienImmobilier bien);
         }
 
-        public BienAdapter(OnItemClickListener listener) {
+        private List<BienImmobilier> biens;
+        private final OnClickListener listener;
+
+        public BienAdapter(List<BienImmobilier> biens, OnClickListener listener) {
+            this.biens = biens;
             this.listener = listener;
         }
 
@@ -106,18 +106,20 @@ public class BienListFragment extends Fragment {
         }
     }
 
-    // ViewHolder pour chaque item
     private static class BienViewHolder extends RecyclerView.ViewHolder {
-        private final android.widget.TextView textView;
 
         public BienViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (android.widget.TextView) itemView;
         }
 
-        public void bind(BienImmobilier bien, BienAdapter.OnItemClickListener listener) {
-            textView.setText(bien.toString());
-            itemView.setOnClickListener(v -> listener.onItemClick(bien));
+        public void bind(BienImmobilier bien, BienAdapter.OnClickListener listener) {
+            // ⚡ Affiche uniquement ID, type et nombre de pièces
+            String description = "ID: " + bien.getId() +
+                    "\nType: " + bien.getType() +
+                    "\nNb pièces: " + (bien.getPieces() != null ? bien.getPieces().size() : 0);
+            ((android.widget.TextView) itemView).setText(description);
+
+            itemView.setOnClickListener(v -> listener.onClick(bien));
         }
     }
 }

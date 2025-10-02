@@ -62,7 +62,11 @@ public class BienImmoViewModel extends ViewModel {
         @Override
         public void onBindViewHolder(@NonNull BienViewHolder holder, int position) {
             BienImmobilier bien = data.get(position);
-            ((TextView) holder.itemView).setText(bien.toString());
+            // Affiche uniquement id, type et nombre de pièces
+            String description = "ID: " + bien.getId() +
+                    "\nType: " + bien.getType() +
+                    "\nNb pièces: " + (bien.getPieces() != null ? bien.getPieces().size() : 0);
+            ((TextView) holder.itemView).setText(description);
         }
 
         @Override
@@ -73,6 +77,15 @@ public class BienImmoViewModel extends ViewModel {
 
     public RecyclerView.Adapter<BienViewHolder> getAdapter() {
         return adapter;
+    }
+
+    public BienImmobilier getBienById(String bienId) {
+        for (BienImmobilier bien : repository.getBiens().getValue()) {
+            if (bien.getId().equals(bienId)) {
+                return bien;
+            }
+        }
+        return null;
     }
 
     // Le ViewHolder interne (lié à l’Adapter ci-dessus)

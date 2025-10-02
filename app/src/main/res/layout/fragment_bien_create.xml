@@ -1,14 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.bienImmo.BienCreateFragment">
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <!-- Titre -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Créer un nouveau bien"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="16dp"/>
+
+        <!-- Type du bien -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type du bien" />
+
+        <Spinner
+            android:id="@+id/spinnerTypeBien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/types_bien"/>
+
+        <!-- Rue -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rue"
+            android:paddingTop="8dp"/>
+
+        <EditText
+            android:id="@+id/editTextRue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rue"/>
+
+        <!-- Code Postal -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Code Postal"
+            android:paddingTop="8dp"/>
+
+        <EditText
+            android:id="@+id/editTextCodePostal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Code Postal"
+            android:inputType="number"/>
+
+        <!-- Ville -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ville"
+            android:paddingTop="8dp"/>
+
+        <EditText
+            android:id="@+id/editTextVille"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ville"/>
+
+        <!-- Bouton de création -->
+        <Button
+            android:id="@+id/buttonCreateBien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Créer le bien"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>
