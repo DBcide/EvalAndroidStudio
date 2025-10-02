@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/bienImmoFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/bienListFragment">
 
+        <!-- Liste des biens -->
+        <fragment
+            android:id="@+id/bienListFragment"
+            android:name="com.example.evalandroidstudio.ui.bienImmo.BienListFragment"
+            android:label="Biens"
+            tools:layout="@layout/fragment_bien_list">
+                <!-- Créer un nouveau bien -->
+                <action
+                    android:id="@+id/action_bienList_to_create"
+                    app:destination="@id/bienCreateFragment" />
+                <!-- Voir détail d’un bien -->
+                <action
+                    android:id="@+id/action_bienList_to_detail"
+                    app:destination="@id/bienDetailFragment" />
+        </fragment>
 
+        <!-- Création d’un bien -->
+        <fragment
+            android:id="@+id/bienCreateFragment"
+            android:name="com.example.evalandroidstudio.ui.create.BienCreateFragment"
+            android:label="Créer Bien"
+            tools:layout="@layout/fragment_bien_create" />
+
+        <!-- Détail d’un bien -->
+        <fragment
+            android:id="@+id/bienDetailFragment"
+            android:name="com.example.evalandroidstudio.ui.detail.BienDetailFragment"
+            android:label="Détail Bien"
+            tools:layout="@layout/fragment_bien_detail">
+                <!-- Ajouter une pièce -->
+                <action
+                    android:id="@+id/action_detail_to_addPiece"
+                    app:destination="@id/pieceAddFragment" />
+        </fragment>
+
+        <!-- Ajouter une pièce -->
+        <fragment
+            android:id="@+id/pieceAddFragment"
+            android:name="com.example.evalandroidstudio.ui.addpiece.PieceAddQuadrilatereFragment"
+            android:label="Ajouter Pièce"
+            tools:layout="@layout/fragment_piece_add" />
 </navigation>
