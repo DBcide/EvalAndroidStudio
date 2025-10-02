@@ -3,6 +3,9 @@ package com.example.evalandroidstudio;
 import static org.junit.Assert.*;
 
 import com.example.evalandroidstudio.model.BienImmobilier;
+import com.example.evalandroidstudio.model.PieceCirculaire;
+import com.example.evalandroidstudio.model.PieceQuadrilatere;
+import com.example.evalandroidstudio.model.PieceTriangulaire;
 import com.example.evalandroidstudio.model.TypePiece;
 
 import org.junit.Test;
