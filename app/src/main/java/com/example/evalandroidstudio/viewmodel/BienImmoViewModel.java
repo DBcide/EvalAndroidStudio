@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.evalandroidstudio.data.repository.BienImmoRepo;
 import com.example.evalandroidstudio.model.BienImmobilier;
+import com.example.evalandroidstudio.model.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,16 @@ public class BienImmoViewModel extends ViewModel {
             }
         }
         return null;
+    }
+
+    public void ajouterPieceAuBien(BienImmobilier bien, Piece piece) {
+        if (bien != null && piece != null) {
+            bien.ajouterPiece(piece);
+
+            // Notifie la LiveData pour rafraîchir l’UI
+            List<BienImmobilier> currentBiens = new ArrayList<>(biens.getValue());
+            biens.setValue(currentBiens);
+        }
     }
 
     // Le ViewHolder interne (lié à l’Adapter ci-dessus)

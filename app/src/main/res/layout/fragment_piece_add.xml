@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ui.bienImmo.PieceAddQuadrilatereFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Titre -->
+        <TextView
+            android:id="@+id/tvAddPieceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter une pièce"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Spinner Type de pièce -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type de pièce:"/>
+        <Spinner
+            android:id="@+id/spinnerTypePiece"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Quadrilatère : Longueur et Largeur -->
+        <LinearLayout
+            android:id="@+id/layoutQuadrilatere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Longueur (m)"/>
+            <EditText
+                android:id="@+id/etLongueur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Largeur (m)"/>
+            <EditText
+                android:id="@+id/etLargeur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <!-- Triangulaire : Base et Hauteur -->
+        <LinearLayout
+            android:id="@+id/layoutTriangulaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Base (m)"/>
+            <EditText
+                android:id="@+id/etBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hauteur (m)"/>
+            <EditText
+                android:id="@+id/etHauteur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <!-- Circulaire : Rayon -->
+        <LinearLayout
+            android:id="@+id/layoutCirculaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rayon (m)"/>
+            <EditText
+                android:id="@+id/etRayon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <!-- Bouton Ajouter -->
+        <Button
+            android:id="@+id/btnAddPiece"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter la pièce"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

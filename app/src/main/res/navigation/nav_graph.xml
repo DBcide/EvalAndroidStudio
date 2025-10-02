@@ -34,12 +34,18 @@
             android:id="@+id/bienDetailFragment"
             android:name="com.example.evalandroidstudio.ui.bienImmo.BienDetailFragment"
             android:label="Détail Bien"
-            tools:layout="@layout/fragment_bien_detail"/>
+            tools:layout="@layout/fragment_bien_detail">
 
-        <!-- Fragment ajout d’une pièce (quadrilatère) -->
+                <!-- Action vers ajout d’une pièce -->
+                <action
+                    android:id="@+id/action_to_pieceAddFragment"
+                    app:destination="@id/pieceAddFragment" />
+        </fragment>
+
+        <!-- Fragment ajout d’une pièce -->
         <fragment
             android:id="@+id/pieceAddFragment"
             android:name="com.example.evalandroidstudio.ui.bienImmo.PieceAddQuadrilatereFragment"
             android:label="Ajouter Pièce"
-            tools:layout="@layout/fragment_piece_add_quadrilatere"/>
+            tools:layout="@layout/fragment_piece_add" />
 </navigation>

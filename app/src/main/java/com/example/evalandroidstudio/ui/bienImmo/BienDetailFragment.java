@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -21,6 +20,8 @@ import com.example.evalandroidstudio.viewmodel.BienImmoViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -55,9 +56,9 @@ public class BienDetailFragment extends Fragment {
 
         // TextView pour afficher info du bien
         TextView tvDetails = view.findViewById(R.id.tvBienDetails);
-        tvDetails.setText(getBienDescription(bien));
+        tvDetails.setText(bien.toString()); // ⚡ Utilisation de toString() directement
 
-        // RecyclerView pour les pièces
+        // RecyclerView pour les pièces (optionnel, tu peux même ne plus afficher la liste séparée si tu utilises toString)
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPieces);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new PieceAdapter(new ArrayList<>(bien.getPieces()));
@@ -70,12 +71,6 @@ public class BienDetailFragment extends Fragment {
             bundle.putString("bienId", bien.getId());
             Navigation.findNavController(view).navigate(R.id.action_to_pieceAddFragment, bundle);
         });
-    }
-
-    private String getBienDescription(BienImmobilier bien) {
-        return "ID: " + bien.getId() +
-                "\nType: " + bien.getType() +
-                "\nNombre de pièces: " + (bien.getPieces() != null ? bien.getPieces().size() : 0);
     }
 
     // Adapter interne pour les pièces
