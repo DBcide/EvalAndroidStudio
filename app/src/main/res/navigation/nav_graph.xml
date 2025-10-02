@@ -10,27 +10,26 @@
             android:name="com.example.evalandroidstudio.ui.bienImmo.BienListFragment"
             android:label="Biens"
             tools:layout="@layout/fragment_bien_list">
-                <!-- Créer un nouveau bien -->
                 <action
-                    android:id="@+id/action_bienList_to_create"
+                    android:id="@+id/action_to_create"
                     app:destination="@id/bienCreateFragment" />
-                <!-- Voir détail d’un bien -->
                 <action
-                    android:id="@+id/action_bienList_to_detail"
+                    android:id="@+id/action_to_detail"
                     app:destination="@id/bienDetailFragment" />
         </fragment>
+
 
         <!-- Création d’un bien -->
         <fragment
             android:id="@+id/bienCreateFragment"
-            android:name="com.example.evalandroidstudio.ui.create.BienCreateFragment"
+            android:name="com.example.evalandroidstudio.ui.bienImmo.BienCreateFragment"
             android:label="Créer Bien"
             tools:layout="@layout/fragment_bien_create" />
 
         <!-- Détail d’un bien -->
         <fragment
             android:id="@+id/bienDetailFragment"
-            android:name="com.example.evalandroidstudio.ui.detail.BienDetailFragment"
+            android:name="com.example.evalandroidstudio.ui.bienImmo.BienDetailFragment"
             android:label="Détail Bien"
             tools:layout="@layout/fragment_bien_detail">
                 <!-- Ajouter une pièce -->
